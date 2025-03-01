@@ -1,15 +1,31 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import './Auth.css';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./Auth.css";
 
 const Register = ({ onClose }) => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-    console.log('Register:', { username, email, password });
+    setError("");
+
+    try {
+      const res = await axios.post("http://localhost:5000/api/auth/register", {
+        username,
+        email,
+        password,
+      });
+
+      alert("Registration successful! Please log in.");
+      navigate("/login");
+    } catch (err) {
+      setError(err.response?.data?.message || "Registration failed.");
+    }
   };
 
   return (
@@ -18,6 +34,7 @@ const Register = ({ onClose }) => {
         <button className="close-btn" onClick={onClose}>✖</button>
         <form className="auth-form" onSubmit={handleRegister}>
           <h2>Sign Up</h2>
+          {error && <p className="error">{error}</p>}
           <input
             type="text"
             placeholder="Username"
