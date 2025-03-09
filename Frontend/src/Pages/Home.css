@@ -1,0 +1,38 @@
+/* Ensure the hero section takes full screen height */
+.hero-section {
+    min-height: 100vh;  /* Takes full viewport height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-image: url("https://source.unsplash.com/1600x900/?food,restaurant");
+    background-size: cover;
+    background-position: center;
+    color: white;
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* Overlay effect for better contrast */
+  .hero-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+    z-index: -1;
+  }
+  
+  /* Ensure cards appear BELOW the hero section */
+  .cards-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 50px 20px;
+    background-color: white;
+    position: relative;
+    z-index: 2; /* Make sure it's above the hero section */
+  }
